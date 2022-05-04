@@ -1,5 +1,6 @@
 const lib = require('../lib');
 const excercise = require('../exercise1');
+const db = require('../db');
 
 
 describe('absolute', () => {
@@ -79,5 +80,18 @@ describe('fizzBuzz', () => {
   it('if input is divisible by 5 should return an exception', () => {
     const result = excercise.fizzBuzz(5);
     expect(result).toBe('Buzz');
+  })
+})
+
+describe('applyDiscount', () => {
+  it('the customer should have 10% if the point is greater than 10', () => {
+    db.getCustomerSync = function(customerId) {
+      console.log('Fake reading cutomer');
+      return {id: customerId, points: 20}
+    }
+
+    const order = {customerId: 1, totalPrice: 10};
+    lib.applyDiscount(order);
+    expect(order.totalPrice).toBe(9)
   })
 })
